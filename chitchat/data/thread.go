@@ -16,7 +16,3 @@ func Threads() (threads []Thread, err error) {
 	results = append(results, thread)
 	return results, nil
 }
-
-func Hello() string {
-	return "hello"
-}

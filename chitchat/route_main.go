@@ -1,21 +1,20 @@
 package main
 
 import (
-	"fmt"
+	"go-web-programming/chitchat/data"
 	"net/http"
-
-	"chitchat/data"
 )
 
 func index(writer http.ResponseWriter, request *http.Request) {
-	fmt.Fprint(writer, data.Hello())
-	/*
-		fmt.Fprint(writer, "Hello")
-		threads, err := data.Threads()
-		if err != nil {
-			error_message(writer, request, "Cannot get threads")
-		} else {
-			fmt.Fprint(writer, threads)
+	threads, err := data.Threads()
+	if err != nil {
+		error_message(writer, request, "Cannot get threads")
+	} else {
+		_, err := session(writer, request)
+		navbar := "public.navbar"
+		if err == nil {
+			navbar = "private.navbar"
 		}
-	*/
+		generateHTML(writer, threads, "layout", navbar, "index")
+	}
 }
