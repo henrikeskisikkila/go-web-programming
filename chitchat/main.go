@@ -15,6 +15,7 @@ func main() {
 	mux.Handle("/static/", http.StripPrefix("/static", files))
 
 	mux.HandleFunc("/", index)
+	mux.HandleFunc("/err", err)
 
 	//Starting up the server
 	server := &http.Server{
