@@ -17,6 +17,9 @@ func main() {
 	mux.HandleFunc("/", index)
 	mux.HandleFunc("/err", err)
 
+	//route_auth.go
+	mux.HandleFunc("/login", login)
+	//mux.HandleFunc("/authenticate", authenticate)
 	//Starting up the server
 	server := &http.Server{
 		Addr:           config.Address,

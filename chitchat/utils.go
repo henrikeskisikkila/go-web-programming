@@ -65,6 +65,18 @@ func session(writer http.ResponseWriter, request *http.Request) (sess data.Sessi
 	return
 }
 
+// Parse HTML templates
+// Pass in a list of file names, and get a template
+func parseTemplateFiles(filenames ...string) (t *template.Template) {
+	var files []string
+	t = template.New("layout")
+	for _, file := range filenames {
+		files = append(files, fmt.Sprintf("templates/%s.html", file))
+	}
+	t = template.Must(t.ParseFiles(files...))
+	return
+}
+
 func generateHTML(writer http.ResponseWriter, data interface{}, filenames ...string) {
 	var files []string
 	for _, file := range filenames {
