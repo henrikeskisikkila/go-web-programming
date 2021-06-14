@@ -86,6 +86,22 @@ func generateHTML(writer http.ResponseWriter, data interface{}, filenames ...str
 	templates.ExecuteTemplate(writer, "layout", data)
 }
 
+//For logging
+func info(args ...interface{}) {
+	logger.SetPrefix("INFO ")
+	logger.Println(args...)
+}
+
+func danger(args ...interface{}) {
+	logger.SetPrefix("DANGER ")
+	logger.Println(args...)
+}
+
+func warning(args ...interface{}) {
+	logger.SetPrefix("WARNING ")
+	logger.Println(args...)
+}
+
 func version() string {
 	return "0.1"
 }
