@@ -12,6 +12,12 @@ func login(writer http.ResponseWriter, request *http.Request) {
 	t.Execute(writer, nil)
 }
 
+//GET /signup
+//Show the signup page
+func signup(writer http.ResponseWriter, request *http.Request) {
+	generateHTML(writer, nil, "login.layout", "public.navbar", "signup")
+}
+
 //POST /authenticate
 //Authentice the user given the email and password
 func authenticate(writer http.ResponseWriter, request *http.Request) {
