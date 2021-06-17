@@ -19,6 +19,11 @@ type Session struct {
 	CreateAt time.Time
 }
 
+//Create a new user and save it into the database
+func (user *User) Create() (err error) {
+	return nil
+}
+
 //Check if session is valid in the database
 func (session *Session) Check() (valid bool, err error) {
 	valid = true
