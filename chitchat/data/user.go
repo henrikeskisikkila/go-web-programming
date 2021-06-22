@@ -55,6 +55,16 @@ func (session *Session) Check() (valid bool, err error) {
 	return
 }
 
+func DeleteSessionsFromDatabase() (err error) {
+	_, err = Db.Exec("delete from threads")
+	return
+}
+
+func DeleteUsersFromDatabase() (err error) {
+	_, err = Db.Exec("delete from users")
+	return
+}
+
 func UserByEmail(email string) (user User, err error) {
 	user = User{}
 	err = Db.QueryRow("SELECT id, uuid, name, email, password, created_at FROM users WHERE email=$1", email).
