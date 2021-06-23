@@ -1,6 +1,9 @@
 package data
 
-import "testing"
+import (
+	"database/sql"
+	"testing"
+)
 
 func Test_UserCreate(t *testing.T) {
 	setup()
@@ -22,5 +25,33 @@ func Test_UserCreate(t *testing.T) {
 
 	if user.Email != fetchedUser.Email {
 		t.Errorf("Retrieved user is not the same as the one created")
+	}
+}
+
+func Test_UserDelete(t *testing.T) {
+	setup()
+	if err := testUser.Create(); err != nil {
+		t.Error(err, "Cannot create user")
+	}
+	if err := testUser.Delete(); err != nil {
+		t.Error(err, "- Cannot detele user")
+	}
+	_, err := UserByEmail(testUser.Email)
+	if err != sql.ErrNoRows {
+		t.Error(err, "- User not deleted")
+	}
+}
+
+func Test_CreateSession(t *testing.T) {
+	setup()
+	if err := testUser.Create(); err != nil {
+		t.Error(err, "Cannot create user")
+	}
+	session, err := testUser.CreateSession()
+	if err != nil {
+		t.Error(err, "Cannot create session")
+	}
+	if session.UserId != testUser.Id {
+		t.Error("User not linked with session")
 	}
 }

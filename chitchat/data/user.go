@@ -49,6 +49,16 @@ func (user *User) Create() (err error) {
 	return
 }
 
+func (user *User) Delete() (err error) {
+	stmt, err := Db.Prepare("delete from users where id = $1")
+	if err != nil {
+		return
+	}
+	defer stmt.Close()
+	_, err = stmt.Exec(user.Id)
+	return
+}
+
 //Check if session is valid in the database
 func (session *Session) Check() (valid bool, err error) {
 	valid = true

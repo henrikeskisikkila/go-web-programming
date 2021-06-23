@@ -14,6 +14,8 @@ var users = []User{
 	},
 }
 
+var testUser = users[0]
+
 func setup() {
 	DeleteThreadsFromDatabase()
 	DeleteSessionsFromDatabase()
