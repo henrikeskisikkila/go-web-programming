@@ -24,7 +24,7 @@ type Session struct {
 //Create a new session for an existing user
 func (user *User) CreateSession() (session Session, err error) {
 	session = Session{}
-	statement := "insert into sessions (uuid, email, user_id, created_at) values ($1, $2, $3, $4) return id, uuid, email, user_id, created_at"
+	statement := "insert into sessions (uuid, email, user_id, created_at) values ($1, $2, $3, $4) returning id, uuid, email, user_id, created_at"
 	stmt, err := Db.Prepare(statement)
 	if err != nil {
 		return

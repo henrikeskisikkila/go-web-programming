@@ -55,3 +55,25 @@ func Test_CreateSession(t *testing.T) {
 		t.Error("User not linked with session")
 	}
 }
+
+func Test_GetSession(t *testing.T) {
+	setup()
+	if err := testUser.Create(); err != nil {
+		t.Error(err, "Cannot create user")
+	}
+	session, err := testUser.CreateSession()
+	if err != nil {
+		t.Error(err, "Cannot create session")
+	}
+
+	s, err := testUser.Session()
+	if err != nil {
+		t.Error(err, "Cannot get session")
+	}
+	if s.Id == 0 {
+		t.Error("No session retrieved")
+	}
+	if s.Id != session.Id {
+		t.Error("Different session retrieved")
+	}
+}
