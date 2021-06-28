@@ -42,6 +42,18 @@ func Test_UserDelete(t *testing.T) {
 	}
 }
 
+func Test_UserUpdate(t *testing.T) {
+	setup()
+	if err := testUser.Create(); err != nil {
+		t.Error(err, "Cannot create user")
+	}
+	testUser.Name = "Random"
+	if err := testUser.Update(); err != nil {
+		t.Error(err, " - Cannot update user")
+	}
+	//TODO: Continue here...
+}
+
 func Test_CreateSession(t *testing.T) {
 	setup()
 	if err := testUser.Create(); err != nil {
