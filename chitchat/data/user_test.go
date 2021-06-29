@@ -49,9 +49,20 @@ func Test_UserUpdate(t *testing.T) {
 	}
 	testUser.Name = "Random"
 	if err := testUser.Update(); err != nil {
-		t.Error(err, " - Cannot update user")
+		t.Error(err, "- Cannot update user")
 	}
-	//TODO: Continue here...
+	u, err := UserByEmail(testUser.Email)
+	if err != nil {
+		t.Error(err, "- Cannot get user")
+	}
+	if u.Name != "Random" {
+		t.Error(err, "- User not updated")
+	}
+}
+
+func Test_UserByUUID(t *testing.T) {
+	setup()
+	t.Error("This test is not implemented")
 }
 
 func Test_CreateSession(t *testing.T) {

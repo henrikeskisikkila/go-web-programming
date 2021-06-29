@@ -68,6 +68,17 @@ func (user *User) Delete() (err error) {
 	return
 }
 
+//Update user information in the database
+func (user *User) Update() (err error) {
+	stmt, err := Db.Prepare("update users set name = $2, email = $3 where id = $1")
+	if err != nil {
+		return
+	}
+	defer stmt.Close()
+	_, err = stmt.Exec(user.Id, user.Name, user.Email)
+	return
+}
+
 //Check if session is valid in the database
 func (session *Session) Check() (valid bool, err error) {
 	valid = false
