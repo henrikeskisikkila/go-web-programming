@@ -44,6 +44,25 @@ func (user *User) Session() (session Session, err error) {
 	return
 }
 
+//Check if session is valid in the database
+func (session *Session) Check() (valid bool, err error) {
+	valid = false
+	err = errors.New("Not implemented")
+	return
+}
+
+//Delete session from database
+func (session *Session) DeleteByUUID() (err error) {
+	stmt, err := Db.Prepare("delete from sessions where uuid = $1")
+	if err != nil {
+		return
+	}
+	defer stmt.Close()
+	_, err = stmt.Exec(session.Uuid)
+	return
+
+}
+
 //Create a new user and save it into the database
 func (user *User) Create() (err error) {
 	statement := "insert into users (uuid, name, email, password, created_at) values ($1, $2, $3, $4, $5) returning id, uuid, created_at"
@@ -76,13 +95,6 @@ func (user *User) Update() (err error) {
 	}
 	defer stmt.Close()
 	_, err = stmt.Exec(user.Id, user.Name, user.Email)
-	return
-}
-
-//Check if session is valid in the database
-func (session *Session) Check() (valid bool, err error) {
-	valid = false
-	err = errors.New("Not implemented")
 	return
 }
 

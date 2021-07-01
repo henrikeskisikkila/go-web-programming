@@ -128,3 +128,28 @@ func Test_GetSession(t *testing.T) {
 		t.Error("Different session retrieved")
 	}
 }
+
+//More test here
+
+func Test_DeleteSession(t *testing.T) {
+	setup()
+	if err := testUser.Create(); err != nil {
+		t.Error(err, "Cannot create user")
+	}
+	session, err := testUser.CreateSession()
+	if err != nil {
+		t.Error(err, "Cannot create session")
+	}
+	err = session.DeleteByUUID()
+	if err != nil {
+		t.Error(err, "Cannot delete session")
+	}
+	s := Session{Uuid: session.Uuid}
+	valid, err := s.Check()
+	if err == nil {
+		t.Error(err, "Session is valid even though deleted")
+	}
+	if valid == true {
+		t.Error(err, "Session is not deleted")
+	}
+}
