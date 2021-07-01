@@ -62,7 +62,35 @@ func Test_UserUpdate(t *testing.T) {
 
 func Test_UserByUUID(t *testing.T) {
 	setup()
-	t.Error("This test is not implemented")
+	if err := testUser.Create(); err != nil {
+		t.Error(err, "Cannot create user")
+	}
+	u, err := UserByUUID(testUser.Uuid)
+	if err != nil {
+		t.Error(err, "User not created")
+	}
+	if testUser.Email != u.Email {
+		t.Errorf("User retrieved is not the same as the one created")
+	}
+}
+
+func Test_Users(t *testing.T) {
+	setup()
+	for _, user := range users {
+		if err := user.Create(); err != nil {
+			t.Error(err, "Cannot create user")
+		}
+	}
+	u, err := Users()
+	if err != nil {
+		t.Error(err, "Cannot retrieve users")
+	}
+	if len(u) != 2 {
+		t.Error(err, "Wrong number of users retrieved")
+	}
+	if u[0].Email != users[0].Email {
+		t.Error(u[0], users[0], "Wrong user retrieved")
+	}
 }
 
 func Test_CreateSession(t *testing.T) {

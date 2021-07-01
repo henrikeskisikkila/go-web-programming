@@ -99,9 +99,34 @@ func DeleteUsersFromDatabase() (err error) {
 	return
 }
 
+//Get all users in the database and returns it
+func Users() (users []User, err error) {
+	rows, err := Db.Query("SELECT id, uuid, name, email, password, created_at FROM users")
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		user := User{}
+		if err = rows.Scan(&user.Id, &user.Uuid, &user.Name, &user.Email, &user.Password, &user.CreatedAt); err != nil {
+			return
+		}
+		users = append(users, user)
+	}
+	rows.Close()
+	return
+}
+
 func UserByEmail(email string) (user User, err error) {
 	user = User{}
 	err = Db.QueryRow("SELECT id, uuid, name, email, password, created_at FROM users WHERE email=$1", email).
+		Scan(&user.Id, &user.Uuid, &user.Name, &user.Email, &user.Password, &user.CreatedAt)
+	return
+}
+
+//Get a single user given the UUID
+func UserByUUID(uuid string) (user User, err error) {
+	user = User{}
+	err = Db.QueryRow("SELECT id, uuid, name, email, password, created_at FROM users WHERE uuid = $1", uuid).
 		Scan(&user.Id, &user.Uuid, &user.Name, &user.Email, &user.Password, &user.CreatedAt)
 	return
 }
