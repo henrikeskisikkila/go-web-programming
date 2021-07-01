@@ -129,8 +129,13 @@ func Test_GetSession(t *testing.T) {
 	}
 }
 
-//More test here
+func Test_checkInvalidSession(t *testing.T) {
+	t.Error("Not implemented")
+}
 
+func Test_checkValidSession(t *testing.T) {
+	t.Error("Not implemented")
+}
 func Test_DeleteSession(t *testing.T) {
 	setup()
 	if err := testUser.Create(); err != nil {
