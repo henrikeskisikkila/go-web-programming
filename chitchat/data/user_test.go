@@ -129,13 +129,42 @@ func Test_GetSession(t *testing.T) {
 	}
 }
 
-func Test_checkInvalidSession(t *testing.T) {
-	t.Error("Not implemented")
+func Test_checkValidSession(t *testing.T) {
+	setup()
+	if err := testUser.Create(); err != nil {
+		t.Error(err, "Cannot create user")
+	}
+
+	session, err := testUser.CreateSession()
+	if err != nil {
+		t.Error(err, "Cannot create session")
+	}
+
+	uuid := session.Uuid
+
+	s := Session{Uuid: uuid}
+	valid, err := s.Check()
+	if err != nil {
+		t.Error(err, "Cannot check session")
+	}
+	if valid != true {
+		t.Error(err, "Session is not valid")
+	}
+
 }
 
-func Test_checkValidSession(t *testing.T) {
-	t.Error("Not implemented")
+func Test_checkInvalidSession(t *testing.T) {
+	setup()
+	s := Session{Uuid: "123"}
+	valid, err := s.Check()
+	if err == nil {
+		t.Error(err, "Session is not valid but is validated")
+	}
+	if valid == true {
+		t.Error(err, "Session is valid")
+	}
 }
+
 func Test_DeleteSession(t *testing.T) {
 	setup()
 	if err := testUser.Create(); err != nil {

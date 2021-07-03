@@ -19,3 +19,11 @@ create table sessions (
   user_id integer references users(id),
   created_at timestamp not null
 );
+
+create table threads (
+  id serial primary key,
+  uuid varchar(64) not null unique,
+  topic text,
+  user_id integer references users(id),
+  created_at timestamp not null
+);
