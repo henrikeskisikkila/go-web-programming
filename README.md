@@ -1,4 +1,4 @@
-# Go Web Programming Demo
+# Go Web Application
 
 Basic go web application that uses PostgreSQL database.
 
